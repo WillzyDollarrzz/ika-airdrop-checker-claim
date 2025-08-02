@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+curl -sSfL https://raw.githubusercontent.com/MystenLabs/suiup/main/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+source ~/.bashrc
+
+suiup install sui@mainnet-1.52.3
+sui --version
+
+rm -f ~/.sui/sui_config/client.yaml
+sui client new-env <<EOF
+y
+https://fullnode.mainnet.sui.io:443
+mainnet
+0
+EOF
+
+sui client switch --env mainnet
+
+
 if ! command -v jq &>/dev/null; then
   echo "Installing jq..."
   sudo apt update && sudo apt install -y jq
@@ -133,5 +151,5 @@ echo "✅ Claimed! Transaction hash: $TX_DIGEST"
 echo "View on Explorer:"
 echo "https://explorer.sui.io/transactions/$TX_DIGEST?network=mainnet"
 
-echo "please donate some sui for the work put into this... thanks🙏"
+echo "please donate some sui for the work put in this... thanks🙏"
 echo "SUI ADDRESS : 0x0ca92bf91d52594745bd6538f73363e6ecc80a133bf8985c308ff19f92b40083 "
