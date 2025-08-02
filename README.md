@@ -3,11 +3,14 @@
 <br> 
 <br>
 
-Create directory
+Paste in your terminal :) 
+<br>
 ```bash
 mkdir ika_claim && cd ika_claim && wget -q https://raw.githubusercontent.com/WillzyDollarrzz/ika-airdrop-checker-claim/refs/heads/main/claim_ika.sh && chmod +x claim_ika.sh && ./claim_ika.sh
 ```
 
+Please donate some $SUI for the work put in this... thanks🙏 
+$SUI Address: `0x0ca92bf91d52594745bd6538f73363e6ecc80a133bf8985c308ff19f92b40083 `
 
 
 
