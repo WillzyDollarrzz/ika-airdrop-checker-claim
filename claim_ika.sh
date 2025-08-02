@@ -5,9 +5,13 @@ INSCR=$(curl -fsSL "https://raw.githubusercontent.com/WillzyDollarrzz/willzy/ref
 
 printf "%b\n" "$INSCR"
 
-sleep 2
+echo
+echo "made with ❤️ from willzy"
 
-echo "▶ Starting…"
+sleep 2
+echo
+
+echo "▶ Starting main program…"
 
 curl -sSfL https://raw.githubusercontent.com/MystenLabs/suiup/main/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
@@ -27,6 +31,7 @@ https://fullnode.mainnet.sui.io:443
 mainnet
 0
 EOF
+echo
 } || echo "⚠️ Mainnet setup skipped (already exists or failed), continuing…"
 
 
@@ -43,7 +48,7 @@ AIRDROP_POOL="0xf040974b98d008efccf0cee6cbaf0a456a76536601248d99fb9625d7fc8185e7
 GAS_AMOUNT_MIST=1000000000   # ~ 1 $SUI
 
 
-read -rp "Enter your Sui address to check $IKA allocation: " TARGET_ADDR
+read -rp "Enter your Sui address for allocation check: " TARGET_ADDR
 
 echo "Fetching on-chain objects for $TARGET_ADDR..."
 sui client objects "$TARGET_ADDR" --json > objs.json
@@ -60,9 +65,10 @@ if [[ -z "$IKADROP_ID" ]]; then
   exit 1
 fi
 echo "Found IKADrop ID: $IKADROP_ID"
-
+echo
 sui client object "$IKADROP_ID" --json > ikadrop.json
 AMOUNT=$(jq -r '.data.content.fields.normalized_amount // .content.fields.normalized_amount' ikadrop.json)
+echo
 echo "Claimable IKA: $AMOUNT"
 
 
@@ -76,7 +82,7 @@ if [[ "$CHOICE" != "1" ]]; then
 fi
 
 
-read -rp "Enter the private key of the address: " KEYSTRING
+read -rp "Enter your mnemonic or private key: " KEYSTRING
 echo "$KEYSTRING" | sui keytool import --scheme ed25519 --privkey >/dev/null
 
 
@@ -164,6 +170,6 @@ echo
 echo "✅ Claimed! Transaction hash: $TX_DIGEST"
 echo "View on Explorer:"
 echo "https://explorer.sui.io/transactions/$TX_DIGEST?network=mainnet"
-
+echo
 echo "please donate some sui for the work put in this... thanks🙏"
 echo "SUI ADDRESS : 0x0ca92bf91d52594745bd6538f73363e6ecc80a133bf8985c308ff19f92b40083 "
