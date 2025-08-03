@@ -11,9 +11,7 @@ mkdir ika_claim && cd ika_claim && wget -q https://raw.githubusercontent.com/Wil
 
 <br>
 
-Please donate some $SUI for the work put in this... thanks🙏 
-<br> 
-$SUI Address: `0x0ca92bf91d52594745bd6538f73363e6ecc80a133bf8985c308ff19f92b40083 `
+All Conditions in Code
 
 
 
