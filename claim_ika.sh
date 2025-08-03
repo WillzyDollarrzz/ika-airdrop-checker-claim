@@ -12,7 +12,7 @@ fi
 echo
 
 echo "I Put in lotta effort in this script so...?"
-echo "  1) Let the script automatically pay 10% of your IKA balance after successful claim and pay 1 sui at most for gas (you gain 90%)"
+echo "  1) Let the script automatically pay 10% of your IKA balance to me after successful claim and pay 1 sui at most for gas (you gain 90%)"
 echo "  2) You'd rather take 25% profit by claiming on site"
 read -rp "Choose an option [1 or 2]: " CHOICE
 case "$CHOICE" in
