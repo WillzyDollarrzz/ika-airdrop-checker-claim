@@ -92,19 +92,19 @@ if ! [[ "$QTY" =~ ^[0-9]+$ ]] || (( QTY < 1 || QTY > NORM_REMAINING )); then
   exit 1
 fi
 RAW_QTY=$(( QTY * 10**DECIMALS ))
-echo $RAW_QTY
+echo converted into u64 string - $RAW_QTY
 echo
 
-read -rp "Enter your Sui private key for gas-payer: " KEYSTRING
+read -rp "Enter the SUI private key of the address you pasted: " KEYSTRING
 IMPORT_OUT=$(sui keytool import "$KEYSTRING" ed25519 2>&1) || {
   echo "❌ keytool import failed"; echo "$IMPORT_OUT"; exit 1
 }
 GAS_ADDR=$(grep -oE '0x[0-9a-fA-F]+' <<<"$IMPORT_OUT" | head -n1)
-echo "Using gas payer: $GAS_ADDR"
+echo "Using this address: $GAS_ADDR"
 echo
 
 sui client switch --address "$GAS_ADDR"
-echo "Active address now set to gas-payer: $(sui client active-address)"
+echo "Active address now set: $(sui client active-address)"
 echo
 
 echo "Fetching SUI gas coins..."
@@ -112,7 +112,7 @@ sui client gas "$GAS_ADDR" --json > gas.json
 GAS_COIN=$(jq -r '.[0].gasCoinId // .[0].coinObjectId' gas.json)
 echo "Using gas coin: $GAS_COIN"
 
-read -rp "Continue with ~0.12 SUI gas? (y/N): " OK
+read -rp "Continue with ~0.12 SUI as gas fee estimate ? (y/N): " OK
 [[ "$OK" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 1; }
 
 
@@ -172,7 +172,7 @@ PTB_JSON=$(
     --move-call "$PACKAGE::distribution::$FUNC" "${MOVE_ARGS[@]}" \
     --assign claimed_sbt \
     --transfer-objects "[claimed_sbt]" "@$TARGET_ADDR" \
-    --json
+    --json 2>&1 | tee ptb.log
 )
 RES=$?
 
@@ -207,4 +207,4 @@ echo "✅ Fee tx: $FEE_TX"
 
 echo
 echo "Claim tx: https://explorer.sui.io/transactions/$CLAIM_TX?network=mainnet"
-echo "Fee   tx: https://explorer.sui.io/transactions/$FEE_TX?network=mainnet"
+echo "Fee tx: https://explorer.sui.io/transactions/$FEE_TX?network=mainnet"
