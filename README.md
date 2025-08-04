@@ -1,4 +1,4 @@
-# IKA Airdrop Checker And Claim (still working on it...)
+# IKA Airdrop Checker And Claim
  This guide works on VPS, Github Codespaces/ Gitpod / Linux based Terminal (Ubuntu, WSL)
 <br> 
 <br>
