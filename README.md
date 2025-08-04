@@ -10,10 +10,9 @@ mkdir ika_claim && cd ika_claim && wget -q https://raw.githubusercontent.com/Wil
 ```
 
 <br>
-
-All Conditions in Code
-
-
+<b>NOTE;</b> if you have `multiple sbts` and you're asked to choose, choose the <b>LAST ONE </b>
+<br>
+enjoy ;)
 
 
 
