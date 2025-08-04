@@ -113,7 +113,7 @@ sui client gas "$GAS_ADDR" --json > gas.json
 GAS_COIN=$(jq -r '.[0].gasCoinId // .[0].coinObjectId' gas.json)
 echo "Using gas coin: $GAS_COIN"
 
-read -srp "Continue with ~0.12 SUI as gas fee estimate ? (y/N): " OK
+read -rp "Continue with ~0.12 SUI as gas fee estimate ? (y/N): " OK
 [[ "$OK" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 1; }
 
 
