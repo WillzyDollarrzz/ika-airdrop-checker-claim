@@ -12,7 +12,8 @@ mkdir ika_claim && cd ika_claim && wget -q https://raw.githubusercontent.com/Wil
 <br>
 <b>NOTE;</b> if you have `multiple sbts` and you're asked to choose, choose the <b>LAST ONE </b>
 <br>
-enjoy ;)
+<br>
+ <i>enjoy ;)</i>
 
 
 
