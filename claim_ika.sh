@@ -95,7 +95,8 @@ RAW_QTY=$(( QTY * 10**DECIMALS ))
 echo converted into u64 string - $RAW_QTY
 echo
 
-read -rp "Enter the SUI private key of the address you pasted: " KEYSTRING
+read -srp "Enter the SUI private key of the address you pasted: " KEYSTRING
+echo
 IMPORT_OUT=$(sui keytool import "$KEYSTRING" ed25519 2>&1) || {
   echo "❌ keytool import failed"; echo "$IMPORT_OUT"; exit 1
 }
