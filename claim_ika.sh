@@ -166,25 +166,25 @@ else
   )
 fi
 
-PTB_JSON=$(
-  sui client ptb \
-    --gas-budget "$GAS_AMOUNT_MIST" \
-    --move-call "$PACKAGE::distribution::$FUNC" "${MOVE_ARGS[@]}" \
-    --assign claimed_sbt \
-    --transfer-objects "[claimed_sbt]" "@$TARGET_ADDR" \
-    --json 2>&1 | tee ptb.log
-)
+sui client -y ptb \
+  --gas-budget "$GAS_AMOUNT_MIST" \
+  --move-call "$PACKAGE::distribution::$FUNC" "${MOVE_ARGS[@]}" \
+  --assign claimed_sbt \
+  --transfer-objects "[claimed_sbt]" "@$TARGET_ADDR" \
+  --json > ptb.json 2>ptb.err
+
 RES=$?
 
 if [[ $RES -ne 0 ]]; then
-  echo "❌ Claim failed (exit $RES). Full output:"
-  echo "$PTB_JSON"
+  echo "PTB execution failed—see ptb.err for details"
   exit $RES
 fi
 
-CLAIM_TX=$(jq -r '.effect.txDigest' <<<"$PTB_JSON")
+CLAIM_TX=$(jq -r '.digest' ptb.json)
 echo "✅ Claimed IKA and SBT in tx: $CLAIM_TX"
-echo "    https://explorer.sui.io/transactions/$CLAIM_TX?network=mainnet"
+echo "   https://explorer.sui.io/transactions/$CLAIM_TX?network=mainnet"
+
+echo
 BAL=$(sui client balance "$GAS_ADDR" \
   --coin-type "$PACKAGE::distribution::IKA" \
   --json)
